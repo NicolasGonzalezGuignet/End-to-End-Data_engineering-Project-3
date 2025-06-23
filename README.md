@@ -1,14 +1,14 @@
 # End-to-End Data Engineering Project using AWS and Snowflake
 
 ## Summary
-In this project, data is extracted from an API (CityBikes API from https://api.citybik.es/v2/) to create an interactive dashboard with the weather forecast for the next 24 hours, view the current weather conditions, and analyze climate variables from the past 10 years. Data ingestion is performed using Azure Data Factory, and the data is stored in a data lake (ADLS Gen2), where data is initially stored in its native format (JSON). Then, the processing and storage of the data is handled through Snowflake. First, an external stage is created to visualize the data without storing it in Snowflake, using the $ notation. Afterwards, Snowpipes are created, which, through Event Grid notifications in Azure (blob created), enable incremental ingestion into a raw layer. In this layer, the data is stored in table format, where the entire JSON file and its metadata are saved. Next, using dynamic tables (which allow dynamic transformations and reading only the new records for incremental load), we unnest the arrays in the JSON files (using the flatten function), clean and filter the data, and obtain a table with structured data. Finally, a small data warehouse is created with 2 dimension tables and 3 fact tables. This layer or schema is then connected to Power BI to create interactive dashboards.
+In this project, data is extracted from an API (CityBikes API from https://api.citybik.es/v2/) to create an interactive dashboard para informa acerca de la disponibilidad dde las bicis y ver otras estadisticas. Data ingestion is performed using AWS Glue, and the data is stored in S3, where data is initially stored in its native format (JSON). Then, the processing and storage of the data is handled through Snowflake. First, an external stage is created to visualize the data without storing it in Snowflake, using the $ notation. Afterwards, Snowpipes are created, los cuales permiten la incremental ingestion into a raw layer. In this layer, the data is stored in table format, where the entire JSON file and its metadata are saved. Next, using dynamic tables (which allow dynamic transformations and reading only the new records for incremental load), we unnest the arrays in the JSON files (using the flatten function), clean and filter the data, and obtain a table with structured data. Finally, a small data warehouse is created with 4 dimension tables and 2 fact tables. This layer or schema is then connected to Power BI to create interactive dashboards.
 
 ## Tools and Technologies
-- **Cloud**: Azure
+- **Cloud**: AWS
 - **Processing**: Snowflake
-- **Storage**: Azure Data Lake Storage Gen 2 and Snowflake
+- **Storage**: S3 and Snowflake
 - **Business Intelligence Dashboard**: Power BI
-- **Data Pipelines/Orchestrator**: Azure Data Factory and Snowflake (Snowpipes and Dynamic Tables)
+- **Data Pipelines/Orchestrator**: AWS Glue and Snowflake (Snowpipes and Dynamic Tables)
 
 ## Project Architecture
 Here you can visualize the completed project:
@@ -19,16 +19,15 @@ Extract data from an API, transform it, and load it into Power BI.
 
 ## Provisioned Resources
   ### Azure
-   - Azure Data Factory (ADF)
-   - Storage Account (ADLS Gen2)
-   - Azure Event Grid Notifications
+   - AWS Glue
+   - S3
   ### Snowflake
    - Snowflake Instance
 
 ## Process Description
 
 ### 1. Ingest data from APIs
-- The data is extracted in JSON format from two APIs (https://openweathermap.org/api and https://dev.meteostat.net/api) using Azure Data Factory (ADF) and stored in an Azure    Data Lake Storage Gen2 (ADLSg2).
+- The data is extracted in JSON format from an API (https://openweathermap.org/api) using Azure Data Factory (ADF) and stored in an Azure    Data Lake Storage Gen2 (ADLSg2).
 - In this [File](ADF/arm_template.zip) you can see the ARM template to provision a similar workspace in ADF.
 
   #### 1st Pipeline
