@@ -34,7 +34,7 @@ Extract data from an API, transform it, and load it into Power BI.
    
     <img src="https://i.imgur.com/6YHw8ew.png" alt="Trigg">
 
-    Este trigger activa al job "CallAPI" cada 10 minutos, es decir, que se esta llamanddo cada 10 minutos y obteniendo datos de la api cada 10 minutos, esto es facilmente         configurable y se puede cambiar segun se requiera.
+    This trigger activates the 'CallAPI' job every 10 minutes, meaning that it is being called and retrieving data from the API every 10 minutes. This is easily configurable and can be changed as needed.
     
 
 ### 2. Snowflake
@@ -60,7 +60,7 @@ Extract data from an API, transform it, and load it into Power BI.
   - <img src="https://i.imgur.com/yHaNwvx.png" alt="model">
  
 
-Here you can see the [video](https://drive.google.com/file/d/1dHaZ7ptRNtrSOl9Ww-Q85RGjIFvcayiR/view?usp=sharing) that documents the implementation of the ETL.
+Here you can see the [video](https://drive.google.com/file/d/1dHaZ7ptRNtrSOl9Ww-Q85RGjIFvcayiR/view?usp=sharing) that documents the implementation of the process.
 
 
 
