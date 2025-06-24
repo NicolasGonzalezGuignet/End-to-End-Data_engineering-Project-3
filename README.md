@@ -58,7 +58,8 @@ Extract data from an API, transform it, and load it into Power BI.
 - In this step, we need to connect the "gold" schema to Power BI. This allows us to create interactive dashboards and work with the data in real time.
  - The model view can be seen here:
    <img src="https://i.imgur.com/yHaNwvx.png" alt="model">
-- Ademas podemos realizar un mapa real sobre la disponibilidad de bicis en las estaciones, como tambien ver los espacios libres y cuando fue la ultima vez que se actualizó.
+   
+- In addition, we can display a real-time map showing bike availability at the stations, as well as view the free spots and the last time the data was updated.
   
    <img src="https://i.imgur.com/EUUxSgA.png" alt="model1">
  
