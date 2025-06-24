@@ -47,9 +47,9 @@ Extract data from an API, transform it, and load it into Power BI.
   - Next, we create the tables for the raw layer. Four tables are created, each storing the full JSON object in one column, along with the filename and the processing timestamp (one for each object of study).
     <img src="https://i.imgur.com/tqXEKJ2.png" alt="table example1">
     - Then, we proceed to create the Snowpipes, which will ingest data from Azure into Snowflake whenever a blob is created inside a container, using Event Grid notifications.
-    - The steps are illustrated in the following worksheet: [raw_layer.txt](Snowflake/raw_layer.sql)
+    - The steps are illustrated in the following worksheet: [raw_layer.sql](Snowflake/raw_layer.sql)
   - Then, we create the dynamic tables in the silver layer, which have the capability to either process all the data from the source table (full load) or only process the new data (incremental load). [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-intro)  are tables that automatically update based on a defined query. They work like materialized views that stay continuously or periodically refreshed, allowing incremental loads, automated transformations, and simplifying the development of data pipelines without the need for additional code.
-    - SQL code for this step is provided in the following worksheet: [silver_layer.txt](Snowflake/silver_layer.sql)
+    - SQL code for this step is provided in the following worksheet: [silver_layer.sql](Snowflake/silver_layer.sql)
     <img src="https://i.imgur.com/aIY5myU.png" alt="table example2">
   - Finally, we create the dimension tables and the fact tables, which will also be dynamic tables, as they are derived from the tables created in the silver layer.
     - The corresponding script can be found here: [gold_layer.txt](Snowflake/gold_layer.sql)
