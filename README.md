@@ -28,7 +28,7 @@ Extract data from an API, transform it, and load it into Power BI.
 
 ### 1. Ingest data from APIs
 - The data is extracted in JSON format from an API (https://api.citybik.es/v2/) using a script in AWS Glue and stored in S3).
-- In this [Script](script.py) you can see the script that calls the API.
+- In this [Script](AWS/CallAPI.py) you can see the script that calls the API.
 
   #### Trigger
   
