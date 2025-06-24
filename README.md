@@ -52,7 +52,7 @@ Extract data from an API, transform it, and load it into Power BI.
     - SQL code for this step is provided in the following worksheet: [silver_layer.sql](Snowflake/silver_layer.sql)
     <img src="https://i.imgur.com/aIY5myU.png" alt="table example2">
   - Finally, we create the dimension tables and the fact tables, which will also be dynamic tables, as they are derived from the tables created in the silver layer.
-    - The corresponding script can be found here: [gold_layer.txt](Snowflake/gold_layer.sql)
+    - The corresponding script can be found here: [gold_layer.sql](Snowflake/gold_layer.sql)
 
 ### 3. Connect Snowflake with Power BI
 - In this step, we need to connect the "gold" schema to Power BI. This allows us to create interactive dashboards and work with the data in real time.
