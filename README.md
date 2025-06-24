@@ -18,7 +18,7 @@ Here you can visualize the completed project:
 Extract data from an API, transform it, and load it into Power BI.
 
 ## Provisioned Resources
-  ### Azure
+  ### Amazon Web Services
    - AWS Glue
    - S3
   ### Snowflake
@@ -26,9 +26,9 @@ Extract data from an API, transform it, and load it into Power BI.
 
 ## Process Description
 
-### 1. Ingest data from APIs
+### 1. Ingest data from API
 - The data is extracted in JSON format from an API (https://api.citybik.es/v2/) using a script in AWS Glue and stored in S3).
-- In this [Script](AWS/CallAPI.py) you can see the script that calls the API.
+- In this [Script](AWS/CallAPI.py) you can see the python script that calls the API.
 
   #### Trigger
    
@@ -44,9 +44,9 @@ Extract data from an API, transform it, and load it into Power BI.
     - We create the "citybikes" database, and then create several schemas ("landing", "raw", "silver", and "gold").
     - Once the external stage and landing layer are set up, we can query the data without storing it in Snowflake, and we can navigate through the JSON using the $ notation.
     - The implementation is available in the following worksheet: [schema_creation.sql](Snowflake/schema_creation.sql)
-  - Next, we create the tables for the raw layer. Four tables are created, each storing the full JSON object in one column, along with the filename and the processing timestamp (one for each object of study).
+  - Next, we create the table for the raw layer. One table is created, storing the full JSON object in one column, along with the filename and the processing timestamp.
     <img src="https://i.imgur.com/tqXEKJ2.png" alt="table example1">
-    - Then, we proceed to create the Snowpipes, which will ingest data from Azure into Snowflake whenever a blob is created inside a container, using Event Grid notifications.
+    - Then, we proceed to create the Snowpipes, which will ingest data from S3 into Snowflake whenever a blob/file is created inside a bucket.
     - The steps are illustrated in the following worksheet: [raw_layer.sql](Snowflake/raw_layer.sql)
   - Then, we create the dynamic tables in the silver layer, which have the capability to either process all the data from the source table (full load) or only process the new data (incremental load). [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-intro)  are tables that automatically update based on a defined query. They work like materialized views that stay continuously or periodically refreshed, allowing incremental loads, automated transformations, and simplifying the development of data pipelines without the need for additional code.
     - SQL code for this step is provided in the following worksheet: [silver_layer.sql](Snowflake/silver_layer.sql)
