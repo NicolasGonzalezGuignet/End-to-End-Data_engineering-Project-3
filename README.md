@@ -27,42 +27,20 @@ Extract data from an API, transform it, and load it into Power BI.
 ## Process Description
 
 ### 1. Ingest data from APIs
-- The data is extracted in JSON format from an API (https://openweathermap.org/api) using Azure Data Factory (ADF) and stored in an Azure    Data Lake Storage Gen2 (ADLSg2).
-- In this [File](ADF/arm_template.zip) you can see the ARM template to provision a similar workspace in ADF.
+- The data is extracted in JSON format from an API (https://api.citybik.es/v2/) using a script in AWS Glue and stored in S3).
+- In this [Script](script.py) you can see the script that calls the API.
 
-  #### 1st Pipeline
-    This process consists of 6 copy data activities, 3 of which are used to extract current weather data and the other 3 to extract air pollution data and save them into a ADLSg2.
-    This is done for each province in the Cuyo region (Mendoza, San Juan and San Luis) (Examples of API responses : [Response1](ADF/Response-APIs-json/weather.json) / [Response2](ADF/Response-APIs-json/air-pollution.json))
-    <img src="https://i.imgur.com/UzHY0bg.png" alt="1st pipeline">
-    
-  #### 2nd Pipeline
-    Through 3 copy data activities, the 24-hour weather forecast is extracted for each province.(Examples of API responses : [Response](ADF/Response-APIs-json/forecast.json))
-    <img src="https://i.imgur.com/O9CEDAJ.png" alt="2nd pipeline">
-
-  #### 3rd Pipeline
-    There are 3 copy data activities that extract data from the https://dev.meteostat.net/api API, retrieving weather information from the past 10 years for each of the previously mentioned provinces. This is useful for analyzing climate variables and observing how they change over time. (Examples of API responses : [Response](ADF/Response-APIs-json/daily-weather.json))
-  <img src="https://i.imgur.com/MaWSYt7.png" alt="3rd pipeline">
-
-  #### Linked Services / Datasets / Triggers
-    Here are the linked services, datasets, and triggers used for the pipelines.
-
-    [Linked Services](ADF/Linked_Services)
+  #### Trigger
   
-    <img src="https://i.imgur.com/0HDfmV6.png" alt="Ls">
-
-    [Datasets](ADF/Datasets)
-      
-    <img src="https://i.imgur.com/2dJALwo.png" alt="Ds">
-
-     [Triggers](ADF/Triggers)    
+     [Trigger](AWS/Trigger.png)    
   
     <img src="https://i.imgur.com/osP9mQU.png" alt="Trigg">
 
-    Here we have a trigger (daily_trigger) applied to Pipeline 2, which runs daily, while the other trigger runs hourly (hourly_trigger) (this can easily be adjusted, for example, to every 5 minutes) and is used for Pipeline 1. As for Pipeline 3, since it handles a bulk load of the past 10 years, a trigger is not necessary—it only needs to be executed once.
+    Este trigger activa al job "CallAPI" cada 10 minutos, es decir, que se esta llamanddo cada 10 minutos y obteniendo datos de la api cada 10 minutos, esto es facilmente         configurable y se puede cambiar segun se requiera.
     
 
 ### 2. Snowflake
-  - As a first step, we need to create a storage integration between Snowflake and Azure. This is primarily a secure permission/authentication mechanism between Snowflake and an external storage service (in this case, Azure). Next, we create an external stage, which is an object that points to a specific location of the external files. Additionally, a notification integration is created, as it is required to automate Snowpipes.
+  - As a first step, we need to create a storage integration between Snowflake and AWS. This is primarily a secure permission/authentication mechanism between Snowflake and an external storage service (in this case, AWS). Next, we create an external stage, which is an object that points to a specific location of the external files.
     - This can be seen in the following SQL worksheet: [storage_integration.txt](Snowflake/Worksheets/storage_integration.txt)
   - Then, we need to create the internal storage area within Snowflake:
     - We create the "weather" database, and then create several schemas ("landing", "raw", "silver", and "gold").
