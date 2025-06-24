@@ -31,10 +31,8 @@ Extract data from an API, transform it, and load it into Power BI.
 - In this [Script](AWS/CallAPI.py) you can see the script that calls the API.
 
   #### Trigger
-  
-     [Trigger](AWS/Trigger.png)    
-  
-    <img src="https://i.imgur.com/osP9mQU.png" alt="Trigg">
+   
+    <img src="https://i.imgur.com/6YHw8ew.png" alt="Trigg">
 
     Este trigger activa al job "CallAPI" cada 10 minutos, es decir, que se esta llamanddo cada 10 minutos y obteniendo datos de la api cada 10 minutos, esto es facilmente         configurable y se puede cambiar segun se requiera.
     
